@@ -942,7 +942,8 @@ namespace MultiplayerARPG
                 HasLineOfSightToActivatable(targetEntity);
         }
 
-        private const float ACTIVATABLE_LOS_EYE_HEIGHT = 1f;
+        private static readonly float[] s_losEyeHeights = { 1f, 1.7f };
+        private const float ACTIVATABLE_LOS_PIVOT_LIFT = 0.6f;
         private const float ACTIVATABLE_LOS_END_MARGIN = 0.1f;
         private static readonly RaycastHit[] s_losHits = new RaycastHit[16];
 
@@ -968,13 +969,37 @@ namespace MultiplayerARPG
             Transform targetTransform = target.EntityTransform;
             if (targetTransform == null)
                 return true;
-            Vector3 origin = EntityTransform.position + Vector3.up * ACTIVATABLE_LOS_EYE_HEIGHT;
-            Vector3 end = targetTransform.TryGetComponent(out Collider targetCollider) ? targetCollider.ClosestPoint(origin) : targetTransform.position;
+            // Clear if any eye-height/aim-point pair is unobstructed, so low obstacles (counters, fences) and ground bumps don't block
+            for (int o = 0; o < s_losEyeHeights.Length; ++o)
+            {
+                Vector3 origin = EntityTransform.position + Vector3.up * s_losEyeHeights[o];
+                Vector3 closest;
+                Vector3 center;
+                if (targetTransform.TryGetComponent(out Collider targetCollider))
+                {
+                    // ClosestPoint only supports box/sphere/capsule/convex mesh, else it logs an error
+                    bool supported = !(targetCollider is TerrainCollider) && !(targetCollider is MeshCollider mesh && !mesh.convex);
+                    closest = supported ? targetCollider.ClosestPoint(origin) : targetCollider.bounds.ClosestPoint(origin);
+                    center = targetCollider.bounds.center;
+                }
+                else
+                {
+                    // Pivot is often on the ground, aim above it
+                    closest = center = targetTransform.position + Vector3.up * ACTIVATABLE_LOS_PIVOT_LIFT;
+                }
+                if (IsLineOfSightClear(origin, closest, targetTransform) || IsLineOfSightClear(origin, center, targetTransform))
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsLineOfSightClear(Vector3 origin, Vector3 end, Transform targetTransform)
+        {
             Vector3 delta = end - origin;
             float distance = delta.magnitude - ACTIVATABLE_LOS_END_MARGIN;
             if (distance <= 0f)
                 return true;
-            int count = Physics.RaycastNonAlloc(origin, delta / (distance + ACTIVATABLE_LOS_END_MARGIN), s_losHits, distance, CurrentGameInstance.GetTargetLayerMask(), QueryTriggerInteraction.Ignore);
+            int count = Physics.RaycastNonAlloc(origin, delta.normalized, s_losHits, distance, CurrentGameInstance.GetTargetLayerMask(), QueryTriggerInteraction.Ignore);
             for (int i = 0; i < count; ++i)
             {
                 if (IsLineOfSightBlocker(s_losHits[i].collider, targetTransform, EntityTransform))

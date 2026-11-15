@@ -462,11 +462,9 @@ namespace MultiplayerARPG
             foreach (EquipWeapons equipWeapons in character.SelectableWeaponSets)
             {
                 // Weight from right hand equipment
-                if (!equipWeapons.rightHand.IsEmptySlot())
-                    result += equipWeapons.rightHand.GetItem().Weight;
+                result += equipWeapons.rightHand.GetTotalItemWeight();
                 // Weight from left hand equipment
-                if (!equipWeapons.leftHand.IsEmptySlot())
-                    result += equipWeapons.leftHand.GetItem().Weight;
+                result += equipWeapons.leftHand.GetTotalItemWeight();
             }
             return result;
         }

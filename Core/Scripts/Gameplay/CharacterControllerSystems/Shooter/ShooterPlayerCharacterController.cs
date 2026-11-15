@@ -1442,7 +1442,8 @@ namespace MultiplayerARPG
                     }
 
                     // Get distance between character and raycast hit point
-                    tempGameEntity = collider.GetComponent<IGameEntity>();
+                    // Parent lookup: a target may be hit through its solid child collider
+                    tempGameEntity = collider.GetComponentInParent<IGameEntity>();
                     if (!tempGameEntity.IsNull())
                     {
                         bool isHideFromHost = PlayingCharacterEntity.Identity.IsServer && tempGameEntity.Identity.IsHideFrom(PlayingCharacterEntity.Identity);
@@ -1460,12 +1461,13 @@ namespace MultiplayerARPG
                             break;
                         }
                         // A wall (e.g. a building) hides everything behind it
-                        if (BaseCharacterEntity.IsLineOfSightBlocker(collider, null, EntityTransform))
+                        // Only hits beyond the character count, the camera sits behind it
+                        if (tempHitInfo.distance >= _centerOriginToCharacterDistance && BaseCharacterEntity.IsLineOfSightBlocker(collider, null, EntityTransform))
                             break;
                         continue;
                     }
 
-                    tempActivatableEntity = collider.GetComponent<IBaseActivatableEntity>();
+                    tempActivatableEntity = collider.GetComponentInParent<IBaseActivatableEntity>();
                     if (tempActivatableEntity != null && GameplayUtils.IsTargetInDistance(EntityTransform.position, tempActivatableEntity.EntityTransform, tempActivatableEntity.GetActivatableDistance()))
                     {
                         // Entity is in front of character, so this is target
@@ -1473,7 +1475,7 @@ namespace MultiplayerARPG
                         break;
                     }
                     // Solid collider without an entity (wall, terrain) hides everything behind it
-                    if (BaseCharacterEntity.IsLineOfSightBlocker(collider, null, EntityTransform))
+                    if (tempHitInfo.distance >= _centerOriginToCharacterDistance && BaseCharacterEntity.IsLineOfSightBlocker(collider, null, EntityTransform))
                         break;
                 }
             }

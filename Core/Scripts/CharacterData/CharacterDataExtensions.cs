@@ -86,19 +86,25 @@ namespace MultiplayerARPG
             float result = 0f;
             foreach (CharacterItem item in itemList)
             {
-                if (item.IsEmptySlot()) continue;
-                float weight = item.GetItem().Weight;
-
-                if (GameInstance.Singleton.countSocketsWeightIntoTotal)
-                    for (int i = 0; i < item.sockets.Count; ++i)
-                    {
-                        if (GameInstance.Items.TryGetValue(item.sockets[i], out BaseItem socketItem))
-                            weight += socketItem.Weight;
-                    }
-
-                result += weight * item.amount;
+                result += item.GetTotalItemWeight();
             }
             return result;
+        }
+
+        /// <summary>Weight of one stack, including sockets when enabled</summary>
+        public static float GetTotalItemWeight(this CharacterItem item)
+        {
+            if (item.IsEmptySlot()) return 0f;
+            float weight = item.GetItem().Weight;
+
+            if (GameInstance.Singleton.countSocketsWeightIntoTotal)
+                for (int i = 0; i < item.sockets.Count; ++i)
+                {
+                    if (GameInstance.Items.TryGetValue(item.sockets[i], out BaseItem socketItem))
+                        weight += socketItem.Weight;
+                }
+
+            return weight * item.amount;
         }
 
         public static int GetTotalItemSlot(this IList<CharacterItem> itemList)
