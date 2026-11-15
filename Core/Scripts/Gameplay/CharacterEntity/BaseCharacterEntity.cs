@@ -938,7 +938,49 @@ namespace MultiplayerARPG
         public bool IsGameEntityInDistance<T>(T targetEntity, bool includeUnHittable = true)
             where T : class, IBaseActivatableEntity
         {
-            return FindPhysicFunctions.IsGameEntityInDistance(targetEntity, EntityTransform.position, targetEntity.GetActivatableDistance() + FIND_ENTITY_DISTANCE_BUFFER, includeUnHittable);
+            return FindPhysicFunctions.IsGameEntityInDistance(targetEntity, EntityTransform.position, targetEntity.GetActivatableDistance() + FIND_ENTITY_DISTANCE_BUFFER, includeUnHittable) &&
+                HasLineOfSightToActivatable(targetEntity);
+        }
+
+        private const float ACTIVATABLE_LOS_EYE_HEIGHT = 1f;
+        private const float ACTIVATABLE_LOS_END_MARGIN = 0.1f;
+        private static readonly RaycastHit[] s_losHits = new RaycastHit[16];
+
+        /// <summary>Solid collider that stops activating. The target itself, the character, other characters, vehicles and pickups don't block</summary>
+        public static bool IsLineOfSightBlocker(Collider collider, Transform ignoreA, Transform ignoreB)
+        {
+            if (collider.isTrigger)
+                return false;
+            Transform hitTransform = collider.transform;
+            if ((ignoreA != null && hitTransform.IsChildOf(ignoreA)) || (ignoreB != null && hitTransform.IsChildOf(ignoreB)))
+                return false;
+            // shortcut: any other solid collider blocks, upgrade to a layer allow-list if props like grass get in the way
+            return collider.GetComponentInParent<BaseCharacterEntity>() == null &&
+                collider.GetComponentInParent<IVehicleEntity>() == null &&
+                collider.GetComponentInParent<IPickupActivatableEntity>() == null;
+        }
+
+        /// <summary>Blocks activating (loot, doors, chests, NPCs...) through walls. Skipped for 2D and for characters (dealing, dueling)</summary>
+        public virtual bool HasLineOfSightToActivatable(IBaseActivatableEntity target)
+        {
+            if (CurrentGameInstance.DimensionType == DimensionType.Dimension2D || target is BaseCharacterEntity)
+                return true;
+            Transform targetTransform = target.EntityTransform;
+            if (targetTransform == null)
+                return true;
+            Vector3 origin = EntityTransform.position + Vector3.up * ACTIVATABLE_LOS_EYE_HEIGHT;
+            Vector3 end = targetTransform.TryGetComponent(out Collider targetCollider) ? targetCollider.ClosestPoint(origin) : targetTransform.position;
+            Vector3 delta = end - origin;
+            float distance = delta.magnitude - ACTIVATABLE_LOS_END_MARGIN;
+            if (distance <= 0f)
+                return true;
+            int count = Physics.RaycastNonAlloc(origin, delta / (distance + ACTIVATABLE_LOS_END_MARGIN), s_losHits, distance, CurrentGameInstance.GetTargetLayerMask(), QueryTriggerInteraction.Ignore);
+            for (int i = 0; i < count; ++i)
+            {
+                if (IsLineOfSightBlocker(s_losHits[i].collider, targetTransform, EntityTransform))
+                    return false;
+            }
+            return true;
         }
 
         public void FindGameEntitiesInDistance<T>(List<T> list, float distance, int overlayMask)

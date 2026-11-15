@@ -1459,6 +1459,9 @@ namespace MultiplayerARPG
                             SelectedEntity = tempActivatableEntity;
                             break;
                         }
+                        // A wall (e.g. a building) hides everything behind it
+                        if (BaseCharacterEntity.IsLineOfSightBlocker(collider, null, EntityTransform))
+                            break;
                         continue;
                     }
 
@@ -1469,6 +1472,9 @@ namespace MultiplayerARPG
                         SelectedEntity = tempActivatableEntity;
                         break;
                     }
+                    // Solid collider without an entity (wall, terrain) hides everything behind it
+                    if (BaseCharacterEntity.IsLineOfSightBlocker(collider, null, EntityTransform))
+                        break;
                 }
             }
             Physics.queriesHitBackfaces = prevQueriesHitBackfaces;

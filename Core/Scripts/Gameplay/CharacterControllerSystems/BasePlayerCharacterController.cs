@@ -432,17 +432,17 @@ namespace MultiplayerARPG
         public bool CanActivate(IActivatableEntity entity)
         {
             
-            return !entity.IsNull() && GameplayUtils.IsTargetInDistance(EntityTransform.position, entity.EntityTransform, entity.GetActivatableDistance()) && entity.CanActivate();
+            return !entity.IsNull() && GameplayUtils.IsTargetInDistance(EntityTransform.position, entity.EntityTransform, entity.GetActivatableDistance()) && PlayingCharacterEntity.HasLineOfSightToActivatable(entity) && entity.CanActivate();
         }
 
         public bool CanHoldActivate(IHoldActivatableEntity entity)
         {
-            return !entity.IsNull() && GameplayUtils.IsTargetInDistance(EntityTransform.position, entity.EntityTransform, entity.GetActivatableDistance()) && entity.CanHoldActivate();
+            return !entity.IsNull() && GameplayUtils.IsTargetInDistance(EntityTransform.position, entity.EntityTransform, entity.GetActivatableDistance()) && PlayingCharacterEntity.HasLineOfSightToActivatable(entity) && entity.CanHoldActivate();
         }
 
         public bool CanPickupActivate(IPickupActivatableEntity entity)
         {
-            return !entity.IsNull() && GameplayUtils.IsTargetInDistance(EntityTransform.position, entity.EntityTransform, entity.GetActivatableDistance()) && entity.CanPickupActivate();
+            return !entity.IsNull() && GameplayUtils.IsTargetInDistance(EntityTransform.position, entity.EntityTransform, entity.GetActivatableDistance()) && PlayingCharacterEntity.HasLineOfSightToActivatable(entity) && entity.CanPickupActivate();
         }
 
         public virtual bool ShouldShowActivateButtons()
