@@ -9,6 +9,8 @@ namespace MultiplayerARPG
         public const int MAX_VALIDATE_QUEUE_SIZE = 16;
 
         public float hitValidationBuffer = 2f;
+        [Tooltip("Extra reach allowed on top of the damage info's max hit distance (movement during flight, lag).")]
+        public float hitRangeBuffer = 8f;
         protected GameObject _hitBoxObject;
         protected Transform _hitBoxTransform;
 
@@ -105,6 +107,12 @@ namespace MultiplayerARPG
                 return false;
             }
 
+            if (hitData.SpreadIndex > hitValidateData.FireSpread)
+            {
+                // Client claims a spread index that this attack never launched (would bypass already-hit dedupe)
+                return false;
+            }
+
             uint objectId = hitData.HitObjectId;
             string hitObjectId = HitRegistrationUtils.MakeHitObjectId(hitData.TriggerIndex, hitData.SpreadIndex, hitData.HitObjectId);
             if (hitValidateData.HitObjects.Contains(hitObjectId))
@@ -122,6 +130,14 @@ namespace MultiplayerARPG
             }
 
             DamageableHitBox hitBox = damageableEntity.HitBoxes[hitBoxIndex];
+            if (hitValidateData.DamageInfo != null)
+            {
+                // Range check from the server-side attacker position, never from client-supplied Origin
+                float maxHitDistance = hitValidateData.DamageInfo.GetMaxHitDistance();
+                float hitBoxMaxExtents = Mathf.Max(hitBox.Bounds.extents.x, hitBox.Bounds.extents.y, hitBox.Bounds.extents.z);
+                if (Vector3.Distance(attacker.EntityTransform.position, hitData.HitOrigin) > maxHitDistance + hitBoxMaxExtents + hitValidationBuffer + hitRangeBuffer)
+                    return false;
+            }
             if (!hitValidateData.DamageInfo?.IsHitValid(hitValidateData, hitData, hitBox) ?? false)
             {
                 // Not valid
