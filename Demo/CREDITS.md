@@ -30,9 +30,10 @@ The following were created by Brenden Vaughan for this demo:
 - the icons under `Textures/Icons/Items`, `Textures/Icons/Skills`,
   `Textures/Icons/Attributes` and `Textures/Icons/Badges`, generated with
   [Ludo AI](https://ludo.ai) on a paid plan;
-- the menu background, loading screen and title (`Textures/OpenMMORPG-menu-background.jpg`,
-  `Textures/OpenMMORPG-loading.jpg`, `Textures/OpenMMORPG-title.png`), generated with
-  Google Gemini;
+- the menu background and loading screen (`Textures/OpenMMORPG-menu-background.jpg`,
+  `Textures/OpenMMORPG-loading.jpg`), generated with Google Gemini;
+- the title (`Textures/OpenMMORPG-title.png`), the Open MMORPG logo, drawn in code and set in
+  Roboto (Apache License 2.0);
 - the bow animations (`Animations/Bow_Draw`, `Bow_Release`), the four `Island_*` ground
   textures (generated from the Quaternius noise sheet), the armour and shield icons
   under `Textures/Icons/Armor` (renders of the Quaternius outfits and the Malagen shield),
@@ -84,5 +85,5 @@ Pro plan, under which Suno assigns its rights in the output to the maker
   AI audio models.
 - **3D models:** the horse, deer, border collie and wolf (Tripo); the bow, staff, arrow,
   quiver, short sword, Viking shield, the Wayside Shrine and the horse's saddle (Ludo AI).
-- **Images:** the item, skill, attribute and badge icons (Ludo AI); the menu background,
-  loading screen and title (Google Gemini).
+- **Images:** the item, skill, attribute and badge icons (Ludo AI); the menu background and
+  loading screen (Google Gemini).
