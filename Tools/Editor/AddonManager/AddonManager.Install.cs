@@ -19,21 +19,30 @@ namespace OpenMMORPG.AddonManager
 	{
 		private const string PackageGuidKey = "AddonManager_PendingPackageGuid";
 		private const string TargetFolderKey = "AddonManager_PendingPackageName";
+		private const string VersionKey = "AddonManager_PendingPackageVersion";
 
 		public static void SetPending(PackageInfo package)
 		{
 			EditorPrefs.SetString(PackageGuidKey, package.guid);
 			EditorPrefs.SetString(TargetFolderKey, package.category + "/" + FolderNameUtility.MakeSafeFolderName(package.name));
+			EditorPrefs.SetString(VersionKey, package.latestVersion ?? "");
 		}
 
 		public static bool HasPending => !string.IsNullOrEmpty(EditorPrefs.GetString(PackageGuidKey));
 		public static string PackageGuid => EditorPrefs.GetString(PackageGuidKey);
 		public static string TargetFolder => EditorPrefs.GetString(TargetFolderKey);
 
+		/// <summary>
+		/// The version being installed, recorded when the install starts so it does not
+		/// depend on which addon is selected, or whether the list has reloaded, by the end.
+		/// </summary>
+		public static string Version => EditorPrefs.GetString(VersionKey);
+
 		public static void Clear()
 		{
 			EditorPrefs.DeleteKey(PackageGuidKey);
 			EditorPrefs.DeleteKey(TargetFolderKey);
+			EditorPrefs.DeleteKey(VersionKey);
 		}
 	}
 
@@ -42,35 +51,43 @@ namespace OpenMMORPG.AddonManager
 		/// <summary>
 		/// Callback from button downloads and installs package from Github
 		/// </summary>
-		private void InstallOrUpdatePackage()
+		/// <remarks>
+		/// Everything after the click works on <paramref name="pkg"/>, never on
+		/// selectedPackage, because the user can select other addons while it installs.
+		/// </remarks>
+		private void InstallOrUpdatePackage(PackageInfo pkg)
 		{
-			AddonInstallState.SetPending(selectedPackage);
+			AddonInstallState.SetPending(pkg);
 
 			//is addon already installed?
-			string[] guids = AssetDatabase.FindAssets(selectedPackage.guid);
+			string[] guids = AssetDatabase.FindAssets(pkg.guid);
 			if (guids.Length > 0)
-				DeleteExistingAddonFolder();
+				DeleteExistingAddonFolder(pkg);
 
-			uiDetailMessage = "Downloading addon...";
-			string TempPath = $"Temp/{selectedPackage.name}.unitypackage";
-			var www = UnityWebRequest.Get(selectedPackage.packageUrl);
+			SetDetailMessage(pkg.guid, "Downloading addon...");
+			string tempPath = $"Temp/{pkg.name}.unitypackage";
+			var www = UnityWebRequest.Get(pkg.packageUrl);
 			www.SendWebRequest().completed += _ =>
 			{
 				if (www.result == UnityWebRequest.Result.Success)
 				{
 					//download package
-					Directory.CreateDirectory(Path.GetDirectoryName(TempPath));
-					File.WriteAllBytes(TempPath, www.downloadHandler.data);
+					Directory.CreateDirectory(Path.GetDirectoryName(tempPath));
+					File.WriteAllBytes(tempPath, www.downloadHandler.data);
 
 					//import package
-					uiDetailMessage = "Importing addon...";
-					ImportDownloadedAddon(TempPath);
+					SetDetailMessage(pkg.guid, "Importing addon...");
+					ImportDownloadedAddon(tempPath, pkg.guid);
 				}
 				else
 				{
-					Debug.LogError($"[AddonManager {Time.time}] {selectedPackage.name} installation failed from {selectedPackage.packageUrl}: {www.error}");
-					uiDetailMessage = $"Addon installation failed: {www.error}";
+					//nothing was imported, so there is nothing to resume
+					AddonInstallState.Clear();
+					Debug.LogError($"[AddonManager {Time.time}] {pkg.name} installation failed from {pkg.packageUrl}: {www.error}");
+					SetDetailMessage(pkg.guid, $"Addon installation failed: {www.error}");
 				}
+
+				www.Dispose();
 			};
 		}
 
@@ -83,7 +100,7 @@ namespace OpenMMORPG.AddonManager
 		/// also covers addons that contain no scripts, which never trigger the domain
 		/// reload that the pending state in OnEnable relies on.
 		/// </summary>
-		private void ImportDownloadedAddon(string tempPath)
+		private void ImportDownloadedAddon(string tempPath, string guid)
 		{
 			AssetDatabase.ImportPackageCallback onCompleted = null;
 			AssetDatabase.ImportPackageFailedCallback onFailed = null;
@@ -123,16 +140,14 @@ namespace OpenMMORPG.AddonManager
 				finish();
 				AddonInstallState.Clear();
 				Debug.LogError($"[AddonManager {Time.time}] failed to import {name}: {error}");
-				uiDetailMessage = $"Addon import failed: {error}";
-				Repaint();
+				SetDetailMessage(guid, $"Addon import failed: {error}");
 			};
 
 			onCancelled = _ =>
 			{
 				finish();
 				AddonInstallState.Clear();
-				uiDetailMessage = "Addon import cancelled.";
-				Repaint();
+				SetDetailMessage(guid, "Addon import cancelled.");
 			};
 
 			AssetDatabase.importPackageCompleted += onCompleted;
@@ -174,11 +189,17 @@ namespace OpenMMORPG.AddonManager
 		/// <param name="guid"></param>
 		private async void CompleteInstall(string pendingGuid, string targetFolder)
 		{
+			string installedVersion = AddonInstallState.Version;
+			SetDetailMessage(pendingGuid, "Finishing install...");
+
 			//find asset with the pendingGuid to locate the imported folder
 			string[] sourceGuids = await FindAssetsWhenIndexed(pendingGuid);
 			if (sourceGuids.Length == 0)
 			{
 				Debug.LogError($"[AddonManager {Time.time}] no assets found with GUID filter: {pendingGuid}");
+				//leaving the pending state set would disable Install and Delete for good
+				AddonInstallState.Clear();
+				SetDetailMessage(pendingGuid, "Addon install failed: the imported addon could not be found.");
 				return;
 			}
 		    string guidPath = AssetDatabase.GUIDToAssetPath(sourceGuids[0]);
@@ -188,6 +209,8 @@ namespace OpenMMORPG.AddonManager
 			if (!AssetDatabase.IsValidFolder(importFolder))
 			{
 				Debug.LogError($"[AddonManager {Time.time}] import folder not found: {importFolder}");
+				AddonInstallState.Clear();
+				SetDetailMessage(pendingGuid, $"Addon install failed: import folder not found ({importFolder}).");
 				return;
 			}
 
@@ -256,42 +279,38 @@ namespace OpenMMORPG.AddonManager
 			//AssetDatabase.Refresh();
 
 			await Task.Delay(3000);
-			if (packages.Count > 0)
-			{
-				PackageInfo installedPackage = packages.FirstOrDefault(p => p.guid == pendingGuid);
-				if (installedPackage != null)
-				{
-					selectedPackage = installedPackage;
-					uiDetailMessage = $"{selectedPackage.name} installed!";
-					Repaint();
 
-					//re-find the guid file
-					string[] postInstallGuids = await FindAssetsWhenIndexed(pendingGuid, 30d);
-					if (postInstallGuids.Length == 0)
-					{
-						Debug.LogError($"[AddonManager {Time.time}] no installed assets found with GUID filter: {pendingGuid}");
-					}
-					else
-					{
-						//write version to guid file
-						string installedGuidPath = AssetDatabase.GUIDToAssetPath(postInstallGuids[0]);
-						//Debug.Log($"[AddonManager {Time.time}] writing version {selectedPackage?.latestVersion} to {installedGuidPath}");
-						try
-						{
-							File.WriteAllText(installedGuidPath, selectedPackage?.latestVersion);
-							AssetDatabase.ImportAsset(installedGuidPath);
-						}
-						catch (System.Exception e)
-						{
-							Debug.LogError($"[AddonManager {Time.time}] failed to update version file: {e.Message}");
-						}
-					}
-				}
+			//re-find the guid file
+			string[] postInstallGuids = await FindAssetsWhenIndexed(pendingGuid, 30d);
+			if (postInstallGuids.Length == 0)
+			{
+				Debug.LogError($"[AddonManager {Time.time}] no installed assets found with GUID filter: {pendingGuid}");
 			}
 			else
 			{
-				Debug.LogError($"[AddonManager {Time.time}] failed to get installed packages");
+				//write the version that was installed, not the selected addon's, to the guid file
+				string installedGuidPath = AssetDatabase.GUIDToAssetPath(postInstallGuids[0]);
+				//Debug.Log($"[AddonManager {Time.time}] writing version {installedVersion} to {installedGuidPath}");
+				try
+				{
+					File.WriteAllText(installedGuidPath, installedVersion);
+					AssetDatabase.ImportAsset(installedGuidPath);
+				}
+				catch (System.Exception e)
+				{
+					Debug.LogError($"[AddonManager {Time.time}] failed to update version file: {e.Message}");
+				}
 			}
+
+			//addons without scripts cause no domain reload, so refresh the status here
+			PackageInfo installedPackage = packages.FirstOrDefault(p => p.guid == pendingGuid);
+			if (installedPackage != null)
+			{
+				installedPackage.installedVersion = installedVersion;
+				UpdatePackageStatus(installedPackage);
+				InvalidateFilterCache();
+			}
+			SetDetailMessage(pendingGuid, $"{installedPackage?.name ?? "Addon"} installed!");
 
 			//only now is the install finished. Clearing the pending state earlier meant
 			//an addon whose scripts trigger a domain reload part way through lost the

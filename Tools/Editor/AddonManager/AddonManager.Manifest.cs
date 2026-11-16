@@ -38,6 +38,7 @@ namespace OpenMMORPG.AddonManager
 			isManifestLoaded = false;
 			uiManifestError = null;
 			packages.Clear();
+			InvalidateFilterCache();
 
 			UnityWebRequest www = UnityWebRequest.Get(PACKAGE_MANIFEST_URL);
 			var asyncOp = www.SendWebRequest();
@@ -190,6 +191,7 @@ namespace OpenMMORPG.AddonManager
 					if (packagesPendingDetails == 0)
 					{
 						isManifestLoaded = true;
+						InvalidateFilterCache();
 						GetInstalledAddons();
 					}
 				}
