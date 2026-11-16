@@ -1,0 +1,201 @@
+Third-Party Notices
+===================
+
+This package contains third-party software components and third-party art and
+audio. Each is listed below with its licence. The licence texts the components
+require to be reproduced are at the end of this file.
+
+
+1. Software components
+----------------------
+
+Component:  MMORPG Kit (the Core, Database, MMO, Server and SharedData folders),
+            with modifications by the Open MMORPG contributors
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2026 Ittipon Teerapruettikulchai (Core)
+            Copyright (c) 2023 Ittipon Teerapruettikulchai (Database)
+            Copyright (c) 2018 Ittipon Teerapruettikulchai (MMO)
+            Copyright (c) 2023 Ittipon Teerapruettikulchai (Server)
+            Copyright (c) 2023 Ittipon Teerapruettikulchai (SharedData)
+            Copyright (c) 2026 Open MMORPG contributors (modifications)
+Source:     https://github.com/insthync
+
+Component:  AddressableAssetTools (ThirdParty/AddressableAssetTools)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2024 Ittipon Teerapruettikulchai
+
+Component:  AudioManager (ThirdParty/AudioManager)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2017 Ittipon Teerapruettikulchai
+
+Component:  CameraAndInput (ThirdParty/CameraAndInput)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2017 Ittipon Teerapruettikulchai
+
+Component:  DevExtension (ThirdParty/DevExtension)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2018 Ittipon Teerapruettikulchai
+
+Component:  GraphicSettings (ThirdParty/GraphicSettings)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2021 Ittipon Teerapruettikulchai
+
+Component:  LiteNetLibManager (ThirdParty/LiteNetLibManager), including
+            SerializeRegistrySourceGenerator.dll, which is built from
+            LiteNetLibManager's own source generator project
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2017 Ittipon Teerapruettikulchai
+Source:     https://github.com/insthync/LiteNetLibManager
+
+Component:  SerializableCallback (ThirdParty/SerializableCallback)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2017 Thor Brigsted
+
+Component:  SerializationSurrogates (ThirdParty/SerializationSurrogates)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2018 Ittipon Teerapruettikulchai
+
+Component:  SpatialPartitioningSystems (ThirdParty/SpatialPartitioningSystems)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2025 Ittipon Teerapruettikulchai
+
+Component:  UnityEditorUtils (ThirdParty/UnityEditorUtils)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2018 Ittipon Teerapruettikulchai
+
+Component:  UnityRestClient (ThirdParty/UnityRestClient)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2021 Ittipon Teerapruettikulchai
+
+Component:  UpdateManager (ThirdParty/UpdateManager)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2026 Ittipon Teerapruettikulchai
+
+Component:  xNode (ThirdParty/xNode)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2017 Thor Brigsted
+Source:     https://github.com/Siccity/xNode
+
+Component:  MiniJSON (MMO/Scripts/MMOGame/Utils/MiniJSON.cs)
+Licence:    MIT (the notice is kept in the source file's header)
+Copyright:  Copyright (c) 2013 Calvin Rien
+
+Component:  LiteNetLib (ThirdParty/LiteNetLibManager/Plugins/LiteNetLib)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2025 Ruslan Pyrch
+Source:     https://github.com/RevenantX/LiteNetLib
+
+Component:  UniTask (ThirdParty/LiteNetLibManager/Plugins/UniTask)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2019 Yoshifumi Kawai / Cysharp, Inc.
+Source:     https://github.com/Cysharp/UniTask
+
+Component:  ZString (ThirdParty/LiteNetLibManager/Plugins/ZString)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2020 Cysharp, Inc.
+Source:     https://github.com/Cysharp/ZString
+
+Component:  Fleck (ThirdParty/LiteNetLibManager/Plugins/Fleck.dll)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2010-2018 Jason Staten
+Source:     https://github.com/statianzo/Fleck
+
+Component:  System.Runtime.CompilerServices.Unsafe
+            (ThirdParty/LiteNetLibManager/Plugins/System.Runtime.CompilerServices.Unsafe.dll)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) .NET Foundation and Contributors
+Source:     https://github.com/dotnet/runtime
+
+Component:  ConcurrentHashSet (Core/Plugins/ConcurrentCollections.dll)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2019 Bar Arnon
+Source:     https://github.com/i3arnon/ConcurrentHashSet
+
+Component:  MySqlConnector (MMO/Plugins/MySqlConnector.dll)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) 2016-2026 Bradley Grainger
+Source:     https://github.com/mysql-net/MySqlConnector
+
+Component:  System.Diagnostics.DiagnosticSource
+            (MMO/Plugins/System.Diagnostics.DiagnosticSource.dll)
+Licence:    MIT (text in section 4)
+Copyright:  Copyright (c) .NET Foundation and Contributors
+Source:     https://github.com/dotnet/runtime
+
+Component:  Mono I18N (MMO/Plugins/I18N.dll, MMO/Plugins/I18N.West.dll)
+Licence:    MIT (text in section 4)
+Copyright:  The Mono project authors (Mono class libraries, MIT per the Mono licence)
+Source:     https://github.com/mono/mono/blob/main/LICENSE
+
+Component:  Mono.Data.Sqlite (MMO/Plugins/Mono.Data.Sqlite.dll)
+Licence:    Public domain (declared in the assembly; derived from System.Data.SQLite)
+Source:     https://github.com/mono/mono
+
+Component:  SQLite (MMO/Plugins/SQLite_x64/sqlite3.dll, MMO/Plugins/SQLite_x86/sqlite3.dll)
+Licence:    Public domain
+Source:     https://www.sqlite.org/copyright.html
+
+
+2. Third-party art and audio (Demo folder)
+------------------------------------------
+
+All of the following are dedicated to the public domain by their authors under
+Creative Commons CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/).
+CC0 requires no attribution; the authors are credited with thanks.
+
+- Universal Base Characters, Modular Character Outfits - Fantasy, Universal
+  Animation Library, Universal Animation Library 2, Stylized Nature MegaKit,
+  Medieval Village MegaKit, Fantasy Props MegaKit, and the animal rigs from
+  Ultimate Animated Animals, by Quaternius (https://quaternius.com).
+  Under Demo/Art and Demo/Animations.
+- Blue Sky Skybox Pack, by Jettelly (https://jettelly.com). Under Demo/Art/Sky.
+- "FX bow&arrow" (https://freesound.org/s/511490/) by Lydmakeren, edited as
+  Demo/Audio/AimedShot1.
+- "FX_bow&arrow2.wav" (https://freesound.org/s/511489/) by Lydmakeren, edited
+  as Demo/Audio/ArrowFire1.
+- "arrow_.hits_target.wav" (https://freesound.org/s/521242/) by cyoung510,
+  edited as Demo/Audio/ArrowImpact1 to ArrowImpact3.
+- "Splashing Water.wav" (https://freesound.org/s/241846/) by rafael45, edited
+  as Demo/Audio/WaterSplash1 to WaterSplash3.
+
+
+3. Content made with AI tools
+-----------------------------
+
+Not third-party components; listed so their origin is on record and matches
+the store listing's AI disclosure. Full details are in Demo/CREDITS.md.
+
+- Sound effects other than the Freesound edits above (Demo/Audio): AI audio models
+- Music: Theme du Chevalier, Ruined Temple, Cavernous Droning, The Unresolved
+  Path (Demo/Audio): Suno
+- Horse, deer, border collie and wolf (Demo/Meshes, Demo/Textures): Tripo
+- Bow, staff, arrow, quiver, short sword and Viking shield (Demo/Art/Weapons): Ludo AI
+- Wayside Shrine (Demo/Art/Shrine): Ludo AI
+- Horse saddle (Demo/Art/Saddle): Ludo AI
+- Item, skill, attribute and badge icons (Demo/Textures/Icons): Ludo AI
+- Menu background and loading screen (Demo/Textures): Google Gemini
+
+
+4. MIT License
+--------------
+
+Applies to every component above marked MIT, together with that component's
+copyright notice as listed.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

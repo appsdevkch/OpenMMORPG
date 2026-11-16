@@ -64,8 +64,21 @@ namespace OpenMMORPG.AddonManager
 		[MenuItem("Tools/Open MMORPG/Develop/Addon Manager", false, -1000)]
 		public static void ShowWindow()
 		{
-			GetWindow<AddonManagerWindow>("Addon Manager");
+			var window = GetWindow<AddonManagerWindow>("Addon Manager");
+
+			// Floating windows open tiny by default; give the list and details room.
+			if (!window.docked && (window.position.width < DEFAULT_SIZE.x || window.position.height < DEFAULT_SIZE.y))
+			{
+				Rect main = EditorGUIUtility.GetMainWindowPosition();
+				Vector2 size = new Vector2(
+					Mathf.Max(window.position.width, DEFAULT_SIZE.x),
+					Mathf.Max(window.position.height, DEFAULT_SIZE.y));
+				window.position = new Rect(main.center - size / 2, size);
+			}
 		}
+
+		private static readonly Vector2 MIN_SIZE = new Vector2(600, 400);
+		private static readonly Vector2 DEFAULT_SIZE = new Vector2(920, 620);
 
 		private Texture2D logoIcon;
 		private Texture2D checkIcon;
@@ -80,6 +93,9 @@ namespace OpenMMORPG.AddonManager
 		private string lastCoreFilter = "";
 		private void OnEnable()
 		{
+			minSize = MIN_SIZE;
+			wantsMouseMove = true; // row hover highlight
+
 			//Load textures
 			logoIcon = Resources.Load<Texture2D>("OpenMMORPG");
 			checkIcon = Resources.Load<Texture2D>("CheckIcon");

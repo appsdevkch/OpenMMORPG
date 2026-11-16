@@ -534,6 +534,8 @@ namespace MultiplayerARPG
         public bool canRepairItemByPlayer = false;
         [Tooltip("How player's inventory works")]
         public InventorySystem inventorySystem = InventorySystem.Simple;
+        [Tooltip("If this is `TRUE`, weight from equipped sockets on items weight counts towards total weight")]
+        public bool countSocketsWeightIntoTotal = false;
         [Tooltip("If this is `TRUE`, weight limit won't be applied")]
         public bool noInventoryWeightLimit;
         [Tooltip("If this is `TRUE` it won't fill empty slots")]

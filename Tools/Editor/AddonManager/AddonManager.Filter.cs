@@ -23,10 +23,19 @@ namespace OpenMMORPG.AddonManager
 		private string currentUpdatedFilter = "Anytime";
 		private string currentCoreFilter = "All Publishers";
 		private List<PackageInfo> cachedFilteredPackages = new List<PackageInfo>();
+		private bool filterCacheDirty = true;
+
+		/// <summary>
+		/// Forces the next GetFilteredPackages call to rebuild the list, e.g. after
+		/// the package list is reloaded or package statuses change.
+		/// </summary>
+		private void InvalidateFilterCache() => filterCacheDirty = true;
+
 		private List<PackageInfo> GetFilteredPackages()
 		{
 			// Invalidate cache if any filter changed
-			if (currentCategoryFilter == lastCategoryFilter &&
+			if (!filterCacheDirty &&
+				currentCategoryFilter == lastCategoryFilter &&
 				currentStatusFilter == lastStatusFilter &&
 				currentUpdatedFilter == lastUpdatedFilter &&
 				currentCoreFilter == lastCoreFilter)
@@ -90,6 +99,7 @@ namespace OpenMMORPG.AddonManager
 
 			// Cache
 			cachedFilteredPackages = filtered;
+			filterCacheDirty = false;
 			lastCategoryFilter = currentCategoryFilter;
 			lastStatusFilter = currentStatusFilter;
 			lastUpdatedFilter = currentUpdatedFilter;

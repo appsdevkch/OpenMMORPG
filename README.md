@@ -116,7 +116,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the branch model and how the kit is a
 
 ## License
 
-Open MMORPG is released under the [MIT License](LICENSE). Third-party components under `ThirdParty` carry their own licenses in their respective folders. The demo's art, animation, sound and music are dedicated to the public domain under CC0 1.0; see [Demo/CREDITS.md](Demo/CREDITS.md). [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) lists everything bundled.
+The copy of Open MMORPG distributed through the Unity Asset Store is covered by the [Asset Store End User License Agreement](https://unity.com/legal/as-terms). The licence of the source repository is in its `LICENSE` file on [GitHub](https://github.com/open-mmorpg/OpenMMORPG). [Third-Party Notices.txt](Third-Party%20Notices.txt) lists every third-party component bundled with the kit, with its licence, and [Demo/CREDITS.md](Demo/CREDITS.md) credits the demo's art, animation, sound and music.
 
 ## Community & Support
 

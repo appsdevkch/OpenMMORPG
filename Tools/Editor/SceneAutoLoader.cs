@@ -5,137 +5,140 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using System.IO;
 
-[InitializeOnLoad]
-static class SceneAutoLoader
+namespace OpenMMORPG.EditorTools
 {
-    private const string SettingsFilePath = "ProjectSettings/SceneAutoLoader.json";
-
-    [System.Serializable]
-    private class AutoLoaderSettings
+    [InitializeOnLoad]
+    static class SceneAutoLoader
     {
-        public bool LoadMasterOnPlay = false;
-        public string MasterScene = "Assets/OpenMMORPG_addons/Demos/TinyEpicDemo/Scenes/TinyEpicDemo-Init.unity"; // default example
-        public string PreviousScene = "";
-    }
+        private const string SettingsFilePath = "ProjectSettings/SceneAutoLoader.json";
 
-    private static AutoLoaderSettings settings;
-
-    static SceneAutoLoader()
-    {
-        LoadSettings();
-        EditorApplication.playModeStateChanged += OnPlayModeChanged;
-    }
-
-    private static void LoadSettings()
-    {
-        if (File.Exists(SettingsFilePath))
+        [System.Serializable]
+        private class AutoLoaderSettings
         {
-            string json = File.ReadAllText(SettingsFilePath);
-            settings = JsonUtility.FromJson<AutoLoaderSettings>(json);
+            public bool LoadMasterOnPlay = false;
+            public string MasterScene = "Assets/OpenMMORPG_addons/Demos/TinyEpicDemo/Scenes/TinyEpicDemo-Init.unity"; // default example
+            public string PreviousScene = "";
         }
-        else
+
+        private static AutoLoaderSettings settings;
+
+        static SceneAutoLoader()
         {
-            settings = new AutoLoaderSettings();
-            SaveSettings();
+            LoadSettings();
+            EditorApplication.playModeStateChanged += OnPlayModeChanged;
         }
-    }
 
-    private static void SaveSettings()
-    {
-        string json = JsonUtility.ToJson(settings, true);
-        File.WriteAllText(SettingsFilePath, json);
-    }
-
-    // ====================== Menu Items ======================
-
-    [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Select Master Scene...", false, -1000)]
-    private static void SelectMasterScene()
-    {
-        string path = EditorUtility.OpenFilePanel("Select Master Scene", Application.dataPath, "unity");
-        if (!string.IsNullOrEmpty(path))
+        private static void LoadSettings()
         {
-            path = path.Replace(Application.dataPath, "Assets");
-            settings.MasterScene = path;
-            settings.LoadMasterOnPlay = true;
-            SaveSettings();
-        }
-    }
-
-    [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Load Master On Play", true)]
-    private static bool ShowLoadMasterOnPlay() => !settings.LoadMasterOnPlay;
-
-    [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Load Master On Play")]
-    private static void EnableLoadMasterOnPlay()
-    {
-        settings.LoadMasterOnPlay = true;
-        SaveSettings();
-    }
-
-    [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Don't Load Master On Play", true)]
-    private static bool ShowDontLoadMasterOnPlay() => settings.LoadMasterOnPlay;
-
-    [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Don't Load Master On Play")]
-    private static void DisableLoadMasterOnPlay()
-    {
-        settings.LoadMasterOnPlay = false;
-        SaveSettings();
-    }
-
-    // ====================== Play Mode Handling ======================
-
-    private static void OnPlayModeChanged(PlayModeStateChange state)
-    {
-        if (!settings.LoadMasterOnPlay)
-            return;
-
-        if (!EditorApplication.isPlaying && EditorApplication.isPlayingOrWillChangePlaymode)
-        {
-            // User pressed Play
-            settings.PreviousScene = EditorSceneManager.GetActiveScene().path;
-
-            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            if (File.Exists(SettingsFilePath))
             {
-                try
-                {
-                    EditorSceneManager.OpenScene(settings.MasterScene);
-                    SaveSettings(); // save previous scene
-                }
-                catch
-                {
-                    Debug.LogError($"[SceneAutoLoader] Master scene not found: {settings.MasterScene}");
-                    EditorApplication.isPlaying = false;
-                }
+                string json = File.ReadAllText(SettingsFilePath);
+                settings = JsonUtility.FromJson<AutoLoaderSettings>(json);
             }
             else
             {
-                EditorApplication.isPlaying = false;
+                settings = new AutoLoaderSettings();
+                SaveSettings();
             }
         }
 
-        // User pressed Stop
-        if (!EditorApplication.isPlaying && !EditorApplication.isPlayingOrWillChangePlaymode)
+        private static void SaveSettings()
         {
-            if (!string.IsNullOrEmpty(settings.PreviousScene))
+            string json = JsonUtility.ToJson(settings, true);
+            File.WriteAllText(SettingsFilePath, json);
+        }
+
+        // ====================== Menu Items ======================
+
+        [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Select Master Scene...", false, -1000)]
+        private static void SelectMasterScene()
+        {
+            string path = EditorUtility.OpenFilePanel("Select Master Scene", Application.dataPath, "unity");
+            if (!string.IsNullOrEmpty(path))
             {
-                try
+                path = path.Replace(Application.dataPath, "Assets");
+                settings.MasterScene = path;
+                settings.LoadMasterOnPlay = true;
+                SaveSettings();
+            }
+        }
+
+        [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Load Master On Play", true)]
+        private static bool ShowLoadMasterOnPlay() => !settings.LoadMasterOnPlay;
+
+        [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Load Master On Play")]
+        private static void EnableLoadMasterOnPlay()
+        {
+            settings.LoadMasterOnPlay = true;
+            SaveSettings();
+        }
+
+        [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Don't Load Master On Play", true)]
+        private static bool ShowDontLoadMasterOnPlay() => settings.LoadMasterOnPlay;
+
+        [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Don't Load Master On Play")]
+        private static void DisableLoadMasterOnPlay()
+        {
+            settings.LoadMasterOnPlay = false;
+            SaveSettings();
+        }
+
+        // ====================== Play Mode Handling ======================
+
+        private static void OnPlayModeChanged(PlayModeStateChange state)
+        {
+            if (!settings.LoadMasterOnPlay)
+                return;
+
+            if (!EditorApplication.isPlaying && EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                // User pressed Play
+                settings.PreviousScene = EditorSceneManager.GetActiveScene().path;
+
+                if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 {
-                    EditorSceneManager.OpenScene(settings.PreviousScene);
+                    try
+                    {
+                        EditorSceneManager.OpenScene(settings.MasterScene);
+                        SaveSettings(); // save previous scene
+                    }
+                    catch
+                    {
+                        Debug.LogError($"[SceneAutoLoader] Master scene not found: {settings.MasterScene}");
+                        EditorApplication.isPlaying = false;
+                    }
                 }
-                catch
+                else
                 {
-                    Debug.LogError($"[SceneAutoLoader] Previous scene not found: {settings.PreviousScene}");
+                    EditorApplication.isPlaying = false;
+                }
+            }
+
+            // User pressed Stop
+            if (!EditorApplication.isPlaying && !EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                if (!string.IsNullOrEmpty(settings.PreviousScene))
+                {
+                    try
+                    {
+                        EditorSceneManager.OpenScene(settings.PreviousScene);
+                    }
+                    catch
+                    {
+                        Debug.LogError($"[SceneAutoLoader] Previous scene not found: {settings.PreviousScene}");
+                    }
                 }
             }
         }
-    }
 
-    // Optional: Add a menu to show current settings
-    [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Show Current Settings")]
-    private static void ShowCurrentSettings()
-    {
-        Debug.Log($"[SceneAutoLoader] Load Master On Play: {settings.LoadMasterOnPlay}\n" +
-                  $"Master Scene: {settings.MasterScene}\n" +
-                  $"Previous Scene: {settings.PreviousScene}");
+        // Optional: Add a menu to show current settings
+        [MenuItem("Tools/Open MMORPG/Build/Scene Autoload/Show Current Settings")]
+        private static void ShowCurrentSettings()
+        {
+            Debug.Log($"[SceneAutoLoader] Load Master On Play: {settings.LoadMasterOnPlay}\n" +
+                      $"Master Scene: {settings.MasterScene}\n" +
+                      $"Previous Scene: {settings.PreviousScene}");
+        }
     }
 }
 

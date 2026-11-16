@@ -48,6 +48,7 @@ namespace OpenMMORPG.AddonManager
 				UpdatePackageStatus(package);
 			}
 
+			InvalidateFilterCache();
 			Repaint();
 		}
 

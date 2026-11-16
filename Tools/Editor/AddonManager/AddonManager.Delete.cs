@@ -16,21 +16,23 @@ namespace OpenMMORPG.AddonManager
 		/// <summary>
 		/// Callback from button deletes folder
 		/// </summary>
-		private bool DeleteExistingAddonFolder()
+		private bool DeleteExistingAddonFolder(PackageInfo pkg)
 		{
-			uiDetailMessage = "Deleting addon...";
+			SetDetailMessage(pkg.guid, "Deleting addon...");
 
-			string[] guids = AssetDatabase.FindAssets(selectedPackage.guid);
+			string[] guids = AssetDatabase.FindAssets(pkg.guid);
 			if (guids.Length == 0)
 			{
-				Debug.Log($"[AddonManager] No existing assets found for {selectedPackage.guid}");
+				Debug.Log($"[AddonManager] No existing assets found for {pkg.guid}");
+				SetDetailMessage(pkg.guid, $"{pkg.name} is not installed.");
 				return false;
 			}
 
 		    string assetPath = AssetDatabase.GUIDToAssetPath(guids[0]);
 			if (string.IsNullOrEmpty(assetPath))
 			{
-				Debug.LogWarning($"[AddonManager] Found {selectedPackage.guid} but got empty path.");
+				Debug.LogWarning($"[AddonManager] Found {pkg.guid} but got empty path.");
+				SetDetailMessage(pkg.guid, $"Delete failed: could not locate {pkg.name}.");
 				return false;
 			}
 
@@ -38,13 +40,22 @@ namespace OpenMMORPG.AddonManager
 			if (!AssetDatabase.IsValidFolder(folderPath))
 			{
 				Debug.LogError($"[AddonManager] Derived path is not a valid folder: {folderPath}");
+				SetDetailMessage(pkg.guid, $"Delete failed: {folderPath} is not a folder.");
 				return false;
 			}
 
 			bool success = AssetDatabase.MoveAssetToTrash(folderPath);
-			if (!success)
+			if (success)
+			{
+				pkg.installedVersion = null;
+				UpdatePackageStatus(pkg);
+				InvalidateFilterCache();
+				SetDetailMessage(pkg.guid, $"{pkg.name} moved to trash.");
+			}
+			else
 			{
 				Debug.LogError($"[AddonManager] Failed to delete folder: {folderPath}");
+				SetDetailMessage(pkg.guid, $"Delete failed: could not move {folderPath} to trash.");
 			}
 
 			return success;

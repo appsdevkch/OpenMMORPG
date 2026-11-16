@@ -26,6 +26,15 @@ manifest beside the archive, for the GitHub release.
 import gzip, hashlib, io, json, os, re, sys, tarfile, time
 
 KIT_MANIFEST = "Tools/Install/KitManifest.json"
+
+# Licence files stay in the repository, which is open source, but never ship: the Asset Store
+# EULA covers the package, and review rejects a package that carries a licence of its own. The
+# licences of the components the kit bundles are reproduced in "Third-Party Notices.txt".
+# Matches LICENSE, LICENCE.md, 3rdParty-LICENSE and the like.
+LICENCE_FILE = re.compile(r"(?:[\w.]+-)?LICEN[CS]E(?:\.(?:md|txt))?", re.I)
+
+def is_licence_file(name):
+    return LICENCE_FILE.fullmatch(name) is not None
 KIT_MANIFEST_GUID = "b0dc8875fe2440b1b1620858e0de0436"
 KIT_MANIFEST_FORMAT = 1
 KIT_MANIFEST_META = (
@@ -146,7 +155,7 @@ def build_kit(src, prefix, out, deps_json=None, version=None, manifest_out=None)
                 add_entry(tar, g, f"{prefix}/{rel_root}", None, mb, mtime); n_dirs += 1
                 entries[g] = {"path": rel_root, "folder": True, "meta": content_hash(mb)}
             for fn in sorted(files):
-                if fn.endswith(".meta") or fn.startswith("."):
+                if fn.endswith(".meta") or fn.startswith(".") or is_licence_file(fn):
                     continue
                 p = os.path.join(root, fn); meta = p + ".meta"
                 relp = fn if rel_root == "." else f"{rel_root}/{fn}"
