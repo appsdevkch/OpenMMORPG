@@ -1152,19 +1152,39 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5108595112187175498, guid: d76409a23d3977f42a2f960da2132f08, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4070764275535728266}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1710652173431537478, guid: d76409a23d3977f42a2f960da2132f08, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 194495783785497501}
   m_SourcePrefab: {fileID: 100100000, guid: d76409a23d3977f42a2f960da2132f08, type: 3}
 --- !u!114 &661562119775574332 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4185733984231378933, guid: d76409a23d3977f42a2f960da2132f08, type: 3}
   m_PrefabInstance: {fileID: 3690948245149161161}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2631673148408686991}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07350a417f6b8f8448b8cbaa847ba456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiplayerARPG.SeatAwarePlayableCharacterModel
+--- !u!1 &2631673148408686991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1710652173431537478, guid: d76409a23d3977f42a2f960da2132f08, type: 3}
+  m_PrefabInstance: {fileID: 3690948245149161161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &194495783785497501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631673148408686991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4903cbaa6473df48a47b02a92ee985b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplayerARPG.NavMeshRootMotion
 --- !u!4 &7641085771597148819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6427330296720483418, guid: d76409a23d3977f42a2f960da2132f08, type: 3}

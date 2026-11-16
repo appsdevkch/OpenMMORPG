@@ -122,7 +122,7 @@ namespace MultiplayerARPG
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
+            _animator = ModelAnimator.Of(this);
             _entity = GetComponentInParent<BaseGameEntity>();
             _character = _entity as BaseCharacterEntity;
             // Nor on anything that cannot climb: the monsters and NPCs share these bodies, and
