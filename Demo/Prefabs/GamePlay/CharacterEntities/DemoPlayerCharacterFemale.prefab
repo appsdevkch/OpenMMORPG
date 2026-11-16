@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 8153710053820653670}
   - component: {fileID: 3711982680621952556}
   - component: {fileID: 3741276858412678263}
+  - component: {fileID: 6079373157906367062}
   m_Layer: 0
   m_Name: DemoPlayerCharacterFemale
   m_TagString: Untagged
@@ -2586,6 +2587,28 @@ MonoBehaviour:
   muteDryStepsInWater: 1
   syncStepSounds: 1
   maxCameraDistance: 35
+--- !u!95 &6079373157906367062
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3717109295463310313}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 495d5bc148b60cb44b0d564e69916f1c, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3853328739378338823
 GameObject:
   m_ObjectHideFlags: 0
@@ -3274,6 +3297,10 @@ PrefabInstance:
       value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 8952510780293377007, guid: 7c20e8a2a1a299649b49e1b53706a87a, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 6079373157906367062}
+    - target: {fileID: 8952510780293377007, guid: 7c20e8a2a1a299649b49e1b53706a87a, type: 3}
       propertyPath: vehicleModels.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -3297,7 +3324,8 @@ PrefabInstance:
       propertyPath: 'vehicleModels.Array.data[0].modelsForEachSeats.Array.data[0]'
       value: 
       objectReference: {fileID: 4335011919960290416}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4564654611825960629, guid: 7c20e8a2a1a299649b49e1b53706a87a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -1214,19 +1214,39 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4080133957820081982, guid: f2d587fb6b7074b499dfdce178070211, type: 3}
       insertIndex: -1
       addedObject: {fileID: 154439486518482243}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8291865638130346351, guid: f2d587fb6b7074b499dfdce178070211, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4621155620762794194}
   m_SourcePrefab: {fileID: 100100000, guid: f2d587fb6b7074b499dfdce178070211, type: 3}
 --- !u!4 &1698872689339676638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8917987718310996632, guid: f2d587fb6b7074b499dfdce178070211, type: 3}
   m_PrefabInstance: {fileID: 7804902124064415046}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2252374843998336041 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8291865638130346351, guid: f2d587fb6b7074b499dfdce178070211, type: 3}
+  m_PrefabInstance: {fileID: 7804902124064415046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4621155620762794194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252374843998336041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4903cbaa6473df48a47b02a92ee985b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplayerARPG.NavMeshRootMotion
 --- !u!114 &4296767512705962874 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6337051109458841148, guid: f2d587fb6b7074b499dfdce178070211, type: 3}
   m_PrefabInstance: {fileID: 7804902124064415046}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2252374843998336041}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07350a417f6b8f8448b8cbaa847ba456, type: 3}
