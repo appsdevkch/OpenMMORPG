@@ -5956,7 +5956,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 4443455242219541069}
-          m_ObjectArgumentAssemblyTypeName: UIBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7957,7 +7957,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 6775634468060926557}
-          m_ObjectArgumentAssemblyTypeName: UIBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9067,7 +9067,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2518455554770966723}
-        m_TargetAssemblyTypeName: UIHistory, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIHistory, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
         m_Arguments:
@@ -15375,7 +15375,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1142416221155695928}
-          m_ObjectArgumentAssemblyTypeName: UIBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15503,7 +15503,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2518455554770966723}
-        m_TargetAssemblyTypeName: UIHistory, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIHistory, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
         m_Arguments:
@@ -22529,7 +22529,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 6775634468060926557}
-          m_ObjectArgumentAssemblyTypeName: UIBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -22737,12 +22737,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2518455554770966723}
-        m_TargetAssemblyTypeName: UIHistory, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIHistory, Assembly-CSharp
         m_MethodName: Next
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 6885772529910586626}
-          m_ObjectArgumentAssemblyTypeName: UIBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

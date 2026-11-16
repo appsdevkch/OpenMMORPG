@@ -5,7 +5,7 @@ someone's project:
 
   * every entry lands under Assets/OpenMMORPG, so an import cannot scatter files
   * build tooling and CI config never ship to customers
-  * the licence and third-party notices are present, as review requires
+  * the third-party notices are present and no licence file ships, as review requires
   * the project settings and the menu item that imports them travel with the kit
   * the render pipeline installer travels with the kit, with the manifest and both pipelines' archives
   * the Package Manager manifest is embedded, including URP, which the kit needs
@@ -25,8 +25,7 @@ PREFIX = "Assets/OpenMMORPG/"
 MIN_ENTRIES = 2000
 
 REQUIRED = [
-    ("THIRD-PARTY-NOTICES.md", "the third-party notices Asset Store review requires"),
-    ("Assets/OpenMMORPG/LICENSE", "the licence"),
+    ("Assets/OpenMMORPG/Third-Party Notices.txt", "the third-party notices Asset Store review requires"),
     ("Tools/Install/OpenMMORPG_Settings.unitypackage", "the project settings archive"),
     ("Tools/Editor/ProjectSettingsInstaller.cs", "the menu item that imports the settings"),
     ("Tools/Editor/PipelineInstaller/PipelineInstaller.cs", "the render pipeline installer"),
@@ -107,6 +106,11 @@ def main():
     leaked = [p for p in paths if "/Tools~/" in p or "/.github/" in p]
     if leaked:
         failures.append(f"build tooling or CI config leaked into the package: {leaked[:5]}")
+
+    # The Asset Store EULA covers the package; a licence file of its own gets it rejected.
+    licences = [p for p in paths if bu.is_licence_file(p.rsplit("/", 1)[-1])]
+    if licences:
+        failures.append(f"{len(licences)} licence file(s) in the package, which review rejects: {licences[:5]}")
 
     for suffix, description in REQUIRED:
         if not any(p.endswith(suffix) for p in paths):

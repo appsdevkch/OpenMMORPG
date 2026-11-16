@@ -8,17 +8,27 @@ Catches the quiet failures in a Unity repo distributed as a .unitypackage:
   * names differing only in case break checkouts on Windows and macOS
   * an AssetOrigin block in a .meta makes the Package Manager list the kit as
     whichever Asset Store product stamped it
-  * a ThirdParty component missing from THIRD-PARTY-NOTICES.md fails Asset Store
+  * a ThirdParty component missing from Third-Party Notices.txt fails Asset Store
     review, which requires the notices file
+  * a model with no prefab in a Prefabs folder fails Asset Store review
+    (guideline 2.4.b); collision meshes are exempt
+  * a script that declares a type outside any namespace fails Asset Store review
+    (guideline 2.5.a)
 
 usage: check_repo.py [repo_root]
 """
 import collections
 import os
+import re
 import sys
 
-NOTICES = "THIRD-PARTY-NOTICES.md"
+NOTICES = "Third-Party Notices.txt"
 THIRD_PARTY = "ThirdParty"
+MODEL_EXTENSIONS = (".fbx", ".obj", ".blend", ".dae", ".3ds", ".glb", ".gltf")
+GUID = re.compile(r"guid: ([0-9a-f]{32})")
+TYPE_DECLARATION = re.compile(r"^\s*(?:\[[^\]]*\]\s*)*(?:(?:public|internal|static|sealed|abstract|partial|readonly)\s+)*"
+                              r"(?:class|struct|interface|enum|record)\s+\w", re.M)
+NAMESPACE = re.compile(r"^\s*namespace\s+[\w.]+", re.M)
 
 # Unity ignores these, so they are not part of the product.
 def ignored(rel):
@@ -121,6 +131,38 @@ def main():
                 f"{len(undocumented)} ThirdParty component(s) absent from {NOTICES}:\n  " + "\n  ".join(undocumented))
         else:
             print(f"third-party components documented: {len(os.listdir(third_party_dir))} entries checked")
+
+    # Every model needs a prefab of its own, in a Prefabs folder.
+    def meta_guid(asset):
+        with open(os.path.join(root, asset + ".meta"), encoding="utf-8", errors="replace") as f:
+            return GUID.search(f.read(4096)).group(1)
+    models = {meta_guid(a): a for a in assets
+              if a.lower().endswith(MODEL_EXTENSIONS) and "/Collisions/" not in a}
+    referenced = set()
+    for a in assets:
+        if a.endswith(".prefab") and "/Prefabs/" in "/" + a:
+            with open(os.path.join(root, a), encoding="utf-8", errors="replace") as f:
+                referenced.update(g for g in GUID.findall(f.read()) if g in models)
+    without_prefab = sorted(models[g] for g in models if g not in referenced)
+    if without_prefab:
+        failures.append(f"{len(without_prefab)} model(s) with no prefab in a Prefabs folder:\n  "
+                        + "\n  ".join(without_prefab[:20]))
+    else:
+        print(f"models with a prefab: {len(models)} checked")
+
+    # Every script declares its types inside a namespace.
+    outside = []
+    for a in assets:
+        if a.endswith(".cs"):
+            with open(os.path.join(root, a), encoding="utf-8-sig", errors="replace") as f:
+                code = re.sub(r"//[^\n]*|/\*.*?\*/", "", f.read(), flags=re.S)
+            if TYPE_DECLARATION.search(code) and not NAMESPACE.search(code):
+                outside.append(a)
+    if outside:
+        failures.append(f"{len(outside)} script(s) declaring types outside a namespace:\n  "
+                        + "\n  ".join(sorted(outside)[:20]))
+    else:
+        print("scripts in a namespace: all")
 
     if failures:
         print("\nFAILED")

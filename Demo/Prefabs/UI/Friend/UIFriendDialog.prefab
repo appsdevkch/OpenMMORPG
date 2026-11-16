@@ -2761,7 +2761,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7604486443717051966}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
@@ -2773,7 +2773,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7401721712854733464}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Show
         m_Mode: 1
         m_Arguments:
@@ -3668,7 +3668,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7604486443717051966}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Show
         m_Mode: 1
         m_Arguments:
@@ -3680,7 +3680,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7401721712854733464}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
@@ -4673,7 +4673,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7401721712854733464}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Show
         m_Mode: 1
         m_Arguments:
@@ -5599,7 +5599,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7604486443717051966}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
@@ -5611,7 +5611,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7401721712854733464}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Show
         m_Mode: 1
         m_Arguments:
@@ -7400,7 +7400,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7401721712854733464}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:

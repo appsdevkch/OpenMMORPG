@@ -5499,7 +5499,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2653304264961533919}
-        m_TargetAssemblyTypeName: UIBase, Assembly-CSharp
+        m_TargetAssemblyTypeName: MultiplayerARPG.UIBase, Assembly-CSharp
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
