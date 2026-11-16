@@ -90,10 +90,16 @@ python "Tools~/check_package.py" OpenMMORPG.unitypackage
 
 `check_repo.py` catches an asset with no `.meta`, which the exporter skips so the file
 silently never ships, plus orphan `.meta` files, duplicate GUIDs, names differing only
-in case, and a `ThirdParty` component missing from `THIRD-PARTY-NOTICES.md`.
+in case, a `ThirdParty` component missing from `Third-Party Notices.txt`, and two things
+Asset Store review rejects: a model (other than a collision mesh) with no prefab in a
+`Prefabs` folder, and a script that declares a type outside a namespace. Give a new model a
+prefab, and one more per material variation (skin) the kit uses, e.g.
+`Demo/Art/Characters/Prefabs/Outfits/Female_Ranger_Body_Bandit.prefab`.
 
 `check_package.py` inspects a built archive: everything under `Assets/OpenMMORPG`, no
-build tooling or CI config inside, the licence, notices, project settings archive and
+build tooling or CI config inside, no licence file (the Asset Store EULA covers the package, so
+the builder leaves every `LICENSE` out; the repository keeps them, and `Third-Party Notices.txt`
+reproduces the bundled components' licences), the notices, project settings archive and
 settings menu item all present, the render pipeline installer with its manifest and both
 pipelines' archives, and URP among the embedded dependencies (the kit's own files are the URP
 version, so it needs URP to compile before the installer has run), and a kit manifest

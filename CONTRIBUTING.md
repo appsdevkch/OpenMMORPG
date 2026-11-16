@@ -67,6 +67,8 @@ $ git subtree pull --prefix=ThirdParty/AudioManager audm upstream
 ...etc
 ```
 
+Asset Store review requires every type to be in a namespace. Upstream Core declares some UI and utility types (`UIBase`, `GenericUtils`, the wrappers in `UI/Utils`, ...) in the global namespace; here they are in `MultiplayerARPG`, indented one level. When a pull touches one of those files, resolve the conflict by keeping the namespace and re-applying upstream's change inside it, and put any new global type upstream adds into `MultiplayerARPG` too. `python "Tools~/check_repo.py" .` fails on any script that declares a type outside a namespace, and on any model without a prefab in a `Prefabs` folder.
+
 ### Releasing
 
 1. Merge develop into master, then tag the release from an up-to-date master with `make -C Tools~ release patch` (or `minor`, `major`), which checks the kit, writes the annotated tag with your changelog and pushes it. See [Tools~/README.md](Tools~/README.md#cutting-a-release).
