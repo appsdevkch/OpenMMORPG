@@ -42,7 +42,9 @@ Shader "Demo/DayNightSkybox"
 
     SubShader
     {
-        Tags { "Queue"="Background" "RenderType"="Background" "PreviewType"="Skybox" }
+        // The RenderPipeline tag says which pipeline this is written for. The HDRP version of the
+        // demo has its own copy of this file (see Tools~/pipelines), so this one is URP's.
+        Tags { "RenderPipeline"="UniversalPipeline" "Queue"="Background" "RenderType"="Background" "PreviewType"="Skybox" }
         Cull Off ZWrite Off
 
         CGINCLUDE
