@@ -1,5 +1,6 @@
 using Insthync.CameraAndInput;
 using UnityEngine;
+using MultiplayerARPG;
 
 namespace UtilsComponents
 {
