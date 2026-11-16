@@ -66,13 +66,13 @@ namespace MultiplayerARPG
     /// climbing or mounted. On the create and select screens the entity is disabled
     /// (see <see cref="CharacterSize"/>) and this does nothing.
     ///
-    /// Belongs on the model, beside its <see cref="Animator"/>. Added to every humanoid body by
+    /// Belongs on the model. Its <see cref="Animator"/> is usually beside it; a player's is on
+    /// the entity instead (see <see cref="ModelAnimator"/>). Added to every humanoid body by
     /// <c>DemoFootIKBuilder</c> (Open MMORPG > Demo > Build Foot IK) and by
     /// <c>DemoCharacterBuilder</c> on a rebuild, which also measure the contact points. The
     /// seated copy that rides the horse is built from the same prefab and so carries one too;
     /// it switches itself off there, because a <see cref="RiderLegSpread"/> owns those legs.
     /// </summary>
-    [RequireComponent(typeof(Animator))]
     [DisallowMultipleComponent]
     public class HumanoidFootIK : MonoBehaviour, IManagedLateUpdate
     {
@@ -187,7 +187,7 @@ namespace MultiplayerARPG
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
+            _animator = ModelAnimator.Of(this);
             _entity = GetComponentInParent<BaseGameEntity>();
             _character = _entity as BaseCharacterEntity;
             // The horse rider's seated copy of this body: its legs are posed by RiderLegSpread.

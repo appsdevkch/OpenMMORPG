@@ -1144,8 +1144,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3430612830748179085, guid: cdc36fc6738305847817841792b44a94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4720519749563172604}
   m_SourcePrefab: {fileID: 100100000, guid: cdc36fc6738305847817841792b44a94, type: 3}
+--- !u!1 &899706128836170205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3430612830748179085, guid: cdc36fc6738305847817841792b44a94, type: 3}
+  m_PrefabInstance: {fileID: 2587205580475198288}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4720519749563172604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899706128836170205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4903cbaa6473df48a47b02a92ee985b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplayerARPG.NavMeshRootMotion
 --- !u!4 &4707948181370655516 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7111856892228057164, guid: cdc36fc6738305847817841792b44a94, type: 3}
@@ -1156,7 +1176,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7643566227073583914, guid: cdc36fc6738305847817841792b44a94, type: 3}
   m_PrefabInstance: {fileID: 2587205580475198288}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 899706128836170205}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d001d904d2d27d46a89e978fbf5e85b, type: 3}

@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 7962668745796926009}
   - component: {fileID: 9165039042466397638}
   - component: {fileID: 1542672832455063775}
+  - component: {fileID: 3331517936774413668}
   m_Layer: 0
   m_Name: DemoPlayerCharacterMale
   m_TagString: Untagged
@@ -3178,6 +3179,28 @@ MonoBehaviour:
   muteDryStepsInWater: 1
   syncStepSounds: 1
   maxCameraDistance: 35
+--- !u!95 &3331517936774413668
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6526385421427787623}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0b3e7c1daa912a14cb1ac9ccaffb19ba, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7845482062070148211
 GameObject:
   m_ObjectHideFlags: 0
@@ -3347,6 +3370,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7643545823217999981}
     m_Modifications:
     - target: {fileID: 2353598599733327962, guid: 0e14f5a7800a8694ea84ac1fbe04c8db, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 3331517936774413668}
+    - target: {fileID: 2353598599733327962, guid: 0e14f5a7800a8694ea84ac1fbe04c8db, type: 3}
       propertyPath: vehicleModels.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -3414,7 +3441,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5455404409093561808, guid: 0e14f5a7800a8694ea84ac1fbe04c8db, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
