@@ -30,8 +30,8 @@ The following were created by Brenden Vaughan for this demo:
 - the icons under `Textures/Icons/Items`, `Textures/Icons/Skills`,
   `Textures/Icons/Attributes` and `Textures/Icons/Badges`, generated with
   [Ludo AI](https://ludo.ai) on a paid plan;
-- the menu background and loading screen (`Textures/OpenMMORPG-menu-background.jpg`,
-  `Textures/OpenMMORPG-loading.jpg`), generated with Google Gemini;
+- the menu background and loading screen (`Textures/OpenMMORPG-menu-background.png`,
+  `Textures/OpenMMORPG-loading.png`), generated with Google Gemini;
 - the title (`Textures/OpenMMORPG-title.png`), the Open MMORPG logo, drawn in code and set in
   Roboto (Apache License 2.0);
 - the bow animations (`Animations/Bow_Draw`, `Bow_Release`), the four `Island_*` ground
