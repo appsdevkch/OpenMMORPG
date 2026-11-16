@@ -18,7 +18,7 @@
 
 ### Menu
 
-- `OpenMMORPG-menu-background.jpg` and `OpenMMORPG-loading.jpg` were generated with Google
+- `OpenMMORPG-menu-background.png` and `OpenMMORPG-loading.png` were generated with Google
   Gemini for this project (see `../CREDITS.md`).
 - `OpenMMORPG-title.png` is the Open MMORPG logo, drawn in code (geometry, and type set in
   Roboto) on the canvas of the title it replaced, so the home menu shows it at the same size.
