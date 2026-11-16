@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "kitVersion": "dev",
-  "builtFrom": "06f942bd0564+",
+  "builtFrom": "a24cbc018ba7+",
   "prefix": "Assets/OpenMMORPG",
   "pipelines": [
     {
@@ -274,7 +274,7 @@
         },
         {
           "path": "Demo/Materials/CryptSky.mat",
-          "hash": "c75b1bc6b13c3e907cc23ab9ce42a899529ca8b2"
+          "hash": "eda4526d2ffaff60f5ac59d30d84175c70985195"
         },
         {
           "path": "Demo/Materials/DarkSeaGreen.mat",
@@ -574,7 +574,7 @@
         },
         {
           "path": "Demo/Shaders/DemoDayNightSkybox.shader",
-          "hash": "b07a329e575e1afd63fc43f57fa07f9072678557"
+          "hash": "68f8efa85cbb63ec689d3e186880f7a0c69ef843"
         },
         {
           "path": "Demo/Shaders/DemoStylizedWater.shader",
@@ -595,10 +595,6 @@
         {
           "path": "Demo/Shaders/DemoWindTerrainDetail.shader",
           "hash": "44c90f660977fd052a76cf5e3e27f95ca8770a32"
-        },
-        {
-          "path": "Demo/Shaders/ProjectorAdditiveTint.shader",
-          "hash": "eef11281ca0b2ce539e3e9c4e74cf2d1ed4102f5"
         },
         {
           "path": "Demo/Shaders/PropSignEmblem.shader",
@@ -1406,8 +1402,7 @@
         "Demo/Settings/DemoURP_Low_Renderer.asset",
         "Demo/Settings/DemoURP_Renderer.asset",
         "Demo/Settings/DemoVolumeProfile.asset",
-        "Demo/Shaders/DemoWindTerrainDetail.shader",
-        "Demo/Shaders/ProjectorAdditiveTint.shader"
+        "Demo/Shaders/DemoWindTerrainDetail.shader"
       ]
     }
   ]
